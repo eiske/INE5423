@@ -151,3 +151,40 @@ select * from ambulatorio where andar = 4 and (capacidade = 50 or numeroa > 10)
 
 --5)
 select m.nome, e.nome from medico m, especialidade e where m.codesp = e.codesp
+
+-- 6)
+select a.numeroa from ambulatorio a where a.andar = 3;
+
+-- 7)
+select c.crm as crmMedico, c.data from consulta c where c.rg = 122 or c.rg = 725
+
+-- 8)
+select numeroa from ambulatorio where capacidade > 50 and andar != 2 and andar != 4
+
+-- 9)
+select m.nome, c.data from medico m, consulta c where m.crm = c.crm;
+
+-- 10)
+select a.numeroa, a.capacidade, m.nome from ambulatorio a, medico m where a.andar = 5 and m.numeroa = a.numeroa;
+
+-- 11)
+select m.nome as medico, p.nome as paciente  from medico m, paciente p, cunsulta c where c.crm = m.crm and c.rg = p.rg
+
+-- 12)
+select m.nome from medico m, consulta c where m.crm = c.crm and m.codesp = 1 and c.data = '03-04-15' and (c.hora > 7 or c.hora < 12);
+
+-- 13) ??
+select p.nome from paciente p, consulta c, medico m where c.coddoenca = 1 and c.rg = p.rg and c.crm = m.crm and (m.nome = 'João da Silva' or m.nome = 'Camila da Silva Santos')
+
+-- 14) ??
+select distinct p.nome as paciente, m.nome as medico from paciente p, medico m
+select nome from paciente union select nome from medico
+
+-- 15)
+select m.nome as medico, m.idade,
+    p.nome as paciente, p.idade,
+    f.nome as funcionario, f.idade
+    from medico m, paciente p, funcionario f where m.codcidade = 5 and p.codcidade = 5 and f.codcidade = 5;
+
+-- 16)
+select f.nome, f.rg from funcionario f, paciente p where p.rg != f.rg and f.salario < 300;
