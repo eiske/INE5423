@@ -183,8 +183,32 @@ select nome from paciente union select nome from medico
 -- 15)
 select m.nome as medico, m.idade,
     p.nome as paciente, p.idade,
-    f.nome as funcionario, f.idade
-    from medico m, paciente p, funcionario f where m.codcidade = 5 and p.codcidade = 5 and f.codcidade = 5;
+        f.nome as funcionario, f.idade
+       from medico m, paciente p, funcionario f where m.codcidade = 5 and p.codcidade = 5 and f.codcidade = 5;
 
 -- 16)
 select f.nome, f.rg from funcionario f, paciente p where p.rg != f.rg and f.salario < 300;
+
+-- 17) ??
+select a.numeroa from ambulatorio a, medico m where a.numeroa != m.numeroa;
+
+-- 18)
+select f.nome, f.rg from funcionario f, paciente p where p.rg = f.rg
+
+-- 19)
+select f.nome, f.rg from funcionario f intersect select p.nome, p.rg from paciente p 
+
+-- 20)
+select f.nome from funcionario f join paciente p on f.rg = p.rg;
+
+-- 21) ??
+select f.nome from funcionario f where f.rg = (select rg from paciente);
+
+-- 22) ??
+select p.nome from paciente p
+
+-- 23)??
+select p.nome, m.nome from paciente p, medico m 
+
+-- 24)
+select c.descricao from cidade c where (select sum(salario) from funcionario) > 15000
