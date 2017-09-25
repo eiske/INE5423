@@ -1,0 +1,8 @@
+﻿1) σ <doença = 'sarampo'> (Paciente)
+2) σ <especialidade = 'ortopedista' AND idade > '40'> (Medico)
+3) σ <crm != '46' AND crm != '79'> (Consulta)
+4) σ <andar = '4' AND (capacidade = '50' OR numeroA > '10')> (Ambulatorio)
+5) π <nome, especialidade> (Medico)
+6) π <numeroA> (σ <andar = '3'> (Ambulatorio))
+7) π <crm, data> (σ <rg = '122' AND rg = '725'> (Consulta))
+8) π <numeroA> (σ <andar != '2' AND andar != '4' AND capacidade > '50'> (Ambulatorio))
