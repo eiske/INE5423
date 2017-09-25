@@ -1,3 +1,3 @@
 # INE5423
-Banco de Dados I
- Universidade Federal de Santa Catarina |
+Banco de Dados I</br>
+Universidade Federal de Santa Catarina
