@@ -1,0 +1,64 @@
+1) {p | Paciente(p) AND p.doenca = 'sarampo'}
+
+2) {m | Medico(m) AND m.especialidade = 'ortopedista' AND m.idade > '40'}
+
+3) {c | Consulta(c) AND c.CRM != '46' AND c.CRM != '79'}
+
+4) {a.NumeroA | Ambulatorio(a) AND a.andar = '4' AND a.numeroA > '10' (a.capacidade = '50' OR)}
+
+5) {m.nome, m.especialidade | Medico(m)}
+
+6) {a.numeroA | Ambulatorio(a) AND a.andar = '3'}
+
+7) {c.CRM, c.data | Consulta(c) AND (c.RG = '122' OR c.RG = '725')}
+
+8) {a.numeroA | Ambulatorio(a) AND (a.andar != '2' AND a.andar != '4' AND a.capacidade > '50')}
+
+9) {t.nome, c.data | Médico(t) AND (∃c)(Consulta(c) AND c.CRM = t.CRM)}
+
+10) {a.numeroA, a.capacidade m.nome | Ambulatorio(a) AND (∃m)Medico(m) AND a.andar = '5' AND m.numeroA = a.numeroA}
+
+11) {m.nome | Medico(m) AND m.especialidade = 'ortopedista' AND (∃c)(Consulta(c)) AND (m.CRM = c.CRM AND c.hora >= 07:00 AND c.hora <= 12:00 AND c.data = 15/04/03)}
+
+12) {p.nome | Paciente(p) AND p.doença = 'Pneumonia' AND (∃c)(Consulta(c) AND c.RG = p.RG AND (∃m)(Médico(m) AND m.CRM = c.CRM AND m.nome = 'João Carlos Santos'))}
+
+13) {f.nome, f.rg | Funcionario(f) AND f.salario < 300 AND (∀p)(NOT(Paciente(p)) OR NOT(f.rg = p.rg)}
+
+14) {a.numeroA | Ambulatorio(a) AND (∀m)(NOT(Medico(m)) OR NOT(a.numeroA = m.numeroA))}
+
+15) {f.nome, f.RG | Funcionario(f) AND (∃p)(Paciente(p)) AND (f.RG = p.RG)}
+
+16) {m.nome | Medico(m) (∀m)(NOT(Consulta(c)) OR (NOT(m.CRM = c.CRM)))}
+
+=======================================================================================================
+
+Projeto (_codProj_, titulo, dt_inicio, dt_fim, #profResp)
+Aluno (_codAluno_, nome, email, #codCurso)
+Curso (_codCurso_, nome)
+ProjetosAluno(_#codProj_, _#codAluno_, cargaHoraria, dt_in, dt_fim)
+Professor (_codProf_, nome)
+
+1) Retorne o nome dos alunos que não atuam em projetos
+
+π Aluno.nome (σ Aluno.codAluno != ProjetoAluno.codAluno) (Aluno X ProjetoAluno)
+
+{a.nome | Aluno(a) AND (∀p)NOT(ProjetoAluno(p)) OR NOT(a.codAluno = p.codAluno)}
+
+
+2) Retorne o nome dos alunos que atuam em todos os projetos
+
+π Aluno.nome, Aluno.codAluno (Aluno): π ProjetoAluno.CodAluno (ProjetoAluno)
+
+{a.nome| Aluno(a) AND (∃p)(ProjetoAluno(p)) AND p.codAluno = a.codAluno }
+
+3) Retorne o nome dos alunos do curso de 'Ciencia da computação' que trabalham mais de 20 horas em um ou mais projeto.
+
+{a.nome | Aluno(a) ADN (∃c)(Corso(c)) AND c.nome = 'Ciencia da computacao' AND (∃p)(ProjetoAluno(p)) AND p.cargaHoraria > 20}
+
+4) Retorne o nome dos alunos, o nome dos projetos em que atuam e o nome do professor responsável por cada projeto.
+
+{a.nome, p.titulo, x.nome| Aluno(a) AND
+(∃pa)(ProjetoAluno(pa)) pa.codAluno = a.codAluno AND
+(∃p)(Projeto) AND p.codProj = pa.codProj ADN
+(∃x)(Professor(x)) AND p.profresp = x.codProf
+}

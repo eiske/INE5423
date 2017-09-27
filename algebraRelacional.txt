@@ -1,8 +1,67 @@
 ﻿1) σ <doença = 'sarampo'> (Paciente)
+
 2) σ <especialidade = 'ortopedista' AND idade > '40'> (Medico)
+
 3) σ <crm != '46' AND crm != '79'> (Consulta)
+
 4) σ <andar = '4' AND (capacidade = '50' OR numeroA > '10')> (Ambulatorio)
+
 5) π <nome, especialidade> (Medico)
+
 6) π <numeroA> (σ <andar = '3'> (Ambulatorio))
+
 7) π <crm, data> (σ <rg = '122' AND rg = '725'> (Consulta))
+
 8) π <numeroA> (σ <andar != '2' AND andar != '4' AND capacidade > '50'> (Ambulatorio))
+
+9) π Medico.nome, Medico.data (σ Medico.crm = Consulta.crm) (Medico x Consulta)
+
+10) π Ambulatorio.numeroA, Ambulatorio.capacidade, Medico.nome (σ Ambulatorio.andar = '5' AND Medico.numeroA = Ambulatorio.numeroA) (Ambulatorio x Medico)
+
+11) π Medico.nome, Paciente.nome, Consulta.data (σ Medico.crm = Consulta.crm AND Consulta.rg = Paciente.rg) (Medico x Paciente x Consulta)
+
+12) π Medico.nome (σ Medico.especialidade = 'Ortopedista' AND Medico.crm = Consulta.crm AND Consulta.hora > '7h' AND Consulta.hora < '12h' AND Consulta.data = 15/04/2003) (Medico x Consulta)
+
+13) π Paciente.nome (σ Consulta.crm = Medico.crm AND (Medico.nome = 'Joao Carlos Santos' OR Medico.nome = 'Maria Souza') AND (Paciente.doenca = 'Pneumonia')) (Paciente x Medico x Consulta)
+
+14) π nome (Medico) U π nome (Paciente)
+
+15) π nome, idade (σ cidade = 'Florianopolis' (Medico) U π nome, idade (σ cidade = 'Florianopolis' (Paciente U π nome, idade (σ cidade = 'Florianopolis' (Funcionario))
+
+==================================================================================================
+
+1) σ <idade < '30'> (Empregado)
+
+2) π <codEmp> (σ <codProj = 'A'> (ProjetoEmpregado))
+
+3) π <nome, salario> (σ <codDep = '001'> (Empregado))
+
+4) π <codProj, codEmp> (σ <dataIn <= '31/12/2009' AND dataFi >= '01/01/2009'> (ProjetoEmpregado))
+
+5) π <codDep> (Departamento) - π <codDep> (Empregado)
+
+6) π <codDep> (Departamento) ∩ π <codDep> (Projeto)
+
+7) π <descriocao> (Departamento) U π <descicao> (Projeto)
+
+===================================================================================================
+
+1) π Empregado.nome (σ Empregado.codDep = Departamento.descicao AND Departamento.descricao = 'Pesquisa') (Empregado x Departamento)
+
+2) π Empregado.nome, Empregado.salario (σ Empregado.codEmp = ProjetoEmpregado.codEmp AND ProjetoEmpregado.codProj = Projeto.codProj AND Projeto.descricao = 'AATOM') (Empregado x ProjetoEmpregado x Projeto)
+
+3) π Empregado.nome, Projeto.descricao (σ Empregado.codEmp = ProjetoEmpregado.codEmp AND ProjetoEmpregado.codProj = Projeto.codpProj AND ProjetoEmpregado.dataIn < '01/01/10' AND ProjetoEmpregado.dataFi > 31/12/2008) (Empregado x ProjetoEmpregado x Projeto)
+
+===================================================================================================
+
+1) R <- pi CRM, rg (Consulta) : pi rg (Paciente)
+pi Medico.nome (R |X| Medico)
+--------------------------------
+R <- pi crm, rg (Consulta) : pi rg (Paciente)
+pi andar, numeroA (Ambulatorio) : R
+
+3) pi Medico.nome, Consulta.RG (Médico X| Consulta)
+
+4) pi Ambulatorio.numeroA, Medico.CRM, Medico.nome (Medico |x Ambulatorio)
+
+5) pi Medico.nome, Medico.rg, Paciente.nome, Paciente.rg (Medico X| Consulta |X Paciente)
